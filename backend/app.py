@@ -15,13 +15,14 @@ CORS(app)
 @app.route('/api/', methods=['GET'])
 def respond():
 
+    image_id = request.args.get("image_id", None)
 
     body = {}
 
     # Build Response
     data = {}
     data['message'] = "Success"
-    data['id'] = "0"
+    data['id'] = image_id
     data['response'] = "Predicted Disease - X"
 
     body["data"] = data
@@ -41,15 +42,10 @@ def index():
     return buildResponse(body)
 
 
+# Build Response
 def buildResponse(body):
 
-    # from flask import json, Response
-    # res = Response(response=json.dumps(body), status=statusCode, mimetype="application/json")
-    # res.headers["Content-Type"] = "application/json; charset=utf-8"
-    # return res
-
     response = jsonify(body)
-    # response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
 
@@ -57,6 +53,5 @@ def buildResponse(body):
 if __name__ == '__main__':
 
     # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True)
+    app.run(threaded=True, debug=True)
 
-# Deployment to Heroku Cloud.
